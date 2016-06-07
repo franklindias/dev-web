@@ -1,9 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Produto {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "produto")
+public class Produto implements Serializable {
+	@Id
+	@GeneratedValue
+	@Column(name = "cod_produto")
 	private int id;
 	private String nome;
 	private String pagina;
@@ -11,14 +19,21 @@ public class Produto {
 	private List<String> fotos;
 	private Date ultimaModificacao;
 	
-	private List<ValorAtributo> valorAtributos;
-	
+	@ManyToOne
+	@JoinColumn(name = "cod_tipo_produto") 
 	private TipoProduto tipoProduto;
 	
+	@ManyToOne
+	@JoinColumn(name = "cod_pessoa") 
 	private Pessoa pessoa;
 	
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	private List<ValorAtributo> valorAtributos;
+	
+	@OneToMany(mappedBy="produto", fetch = FetchType.LAZY)
 	private List<Comentario> comentarios;
 	
+	@OneToMany(mappedBy="produto", fetch = FetchType.LAZY)
 	private List<Classificacao> classificacoes;
 	
 }
