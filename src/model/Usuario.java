@@ -15,6 +15,7 @@ public class Usuario extends Pessoa implements Serializable {
 	@GeneratedValue
 	@Column(name = "cod_usuario")
 	private int id;
+	
 	//indicar se a pessoa é confiavel
 	private Boolean eConfiavel = false;
 
