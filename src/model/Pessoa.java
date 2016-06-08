@@ -29,4 +29,12 @@ public class Pessoa implements Serializable {
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<Classificacao> classificacoes;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+	private Usuario usuario;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+	private Admin admin;
+	
 }
