@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Compare360 - Conta de Usuário</title>
+
+	<ui:insert name="importstyle">
+		<ui:include src="/template/importstyle.xhtml" />
+	</ui:insert>
+</h:head>
+<body>
+	<ui:component>
+
+		<section id="conta"> <!--begin section-white-->
+		<div class="section-dark medium-padding">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-4">
+						<div class="col-md-12 text-center">
+							<h3 class="medium-title white">Crie sua conta</h3>
+						</div>
+						<div>
+							<h:form>
+								Seu nome <h:inputText value="#{userBean.pessoa.nome}"/><br/>
+								Email: <h:inputText value="#{userBean.pessoa.email}"/><br/>
+								Nome de Usuário: <h:inputText value="#{userBean.pessoa.username}"/><br/>
+								Senha: <h:inputText value="#{userBean.pessoa.password}"/><br/>
+								
+								<h:commandButton action="#{userBean.cadastrar()}" value="Cadastrar-se" />
+									
+								</h:form>
+						</div>
+					</div>
+					<div class="col-md-4">
+					<div class="col-md-12 text-center">
+							<h3 class="medium-title white">Logue</h3>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<!--end container--> </section>
+
+	</ui:component>
+</body>
+</html>

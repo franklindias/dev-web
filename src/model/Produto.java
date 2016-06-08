@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "produto")
@@ -16,7 +18,7 @@ public class Produto implements Serializable {
 	private String nome;
 	private String pagina;
 	private Boolean status;
-	private List<String> fotos;
+	//private List<String> fotos;
 	private Date ultimaModificacao;
 	
 	@ManyToOne

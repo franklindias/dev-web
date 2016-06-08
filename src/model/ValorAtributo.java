@@ -35,6 +35,6 @@ public class ValorAtributo implements Serializable {
 	@JoinColumn(name = "cod_produto") 
 	private Produto produto;
 	
-	@OneToMany(mappedBy="valor_atributo", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="valorAtributo", fetch = FetchType.LAZY)
 	private List<Denuncia> denuncias;
 }
