@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Compare360 - Dashboard Admin</title>
+
+	<ui:insert name="importstyle">
+		<ui:include src="/template/importstyle.xhtml" />
+	</ui:insert>
+
+	<style>
+nav.navbar {
+	background-color: rgba(34, 34, 34, 0.95) !important;
+}
+
+.capitalized {
+	text-transform: capitalize !important;
+}
+
+#tipo_produto {
+	height: 400px;
+}
+</style>
+</h:head>
+<body>
+	<ui:insert name="importheader">
+		<ui:include src="/template/header.xhtml" />
+	</ui:insert>
+
+	<section id="tipo_produto">
+	<div class="section-white high-padding">
+
+		<div class="container">
+			<h5>Atributos por Categoria</h5>
+
+			<div class="row">
+				<div class="col-md-8">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Listagem de Atributos</h3>
+						</div>
+						<div class="panel-body">
+							<h:dataTable class="table" id="atributos"
+								value="#{atributoBean.listaAtributos}" var="atributo">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Nome" />
+									</f:facet>
+									<h:outputText value="#{atributo.nome}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Tipo de Dado" />
+									</f:facet>
+									<h:outputText value="#{atributo.tipoDado}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Categoria" />
+									</f:facet>
+									<h:outputText value="#{atributo.tipoProduto.nome}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Status" />
+									</f:facet>
+									<h:outputText value="Aprovado" style="color:green;"
+										rendered="#{atributo.status}" />
+									<h:outputText value="Aguardando" style="color:red;"
+										rendered="#{not atributo.status}" />
+								</h:column>
+								<c:if test="#{sessionScope['usuario-logado'].geteAdmin()}">
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="" />
+										</f:facet>
+										<h:form>
+											<h:commandLink class='btn btn-danger'
+												action="#{atributoBean.excluir(atributo)}"
+												update="atributos">
+												<i class="fa fa-trash"></i>
+											</h:commandLink>
+											<h:commandLink class='btn btn-primary'
+												action="#{atributoBean.mudarStatus(atributo)}"
+												update="atributos">
+												<i class="fa fa-exchange"></i>
+											</h:commandLink>
+										</h:form>
+									</h:column>
+								</c:if>
+							</h:dataTable>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Nova Atributo</h3>
+						</div>
+						<div class="panel-body">
+							<h:form class="text-right" prependId="false">
+								<h:message for="produto"/>
+								<h:selectOneMenu class="form-control"
+									id="produto" value="#{atributoBean.idProduto}">
+									<f:selectItems value="#{tipoProdutoBean.listaTipoProdutos}"
+										var="tp" itemLabel="#{tp.nome}" itemValue="#{tp.id}" />
+								</h:selectOneMenu><br />
+								<h:message for="na"/>
+								<h:inputText id="na" class="contact-input white-input"
+									a:placeholder="Nome do Atributo"
+									value="#{atributoBean.atributo.nome}" />
+								<br />
+								<h:message for="tda"/>
+								<h:inputText id="tda" class="contact-input white-input"
+									a:placeholder="Tipo de Dado"
+									value="#{atributoBean.atributo.tipoDado}" />
+								<br />
+								<h:commandButton action="#{atributoBean.cadastrar()}"
+									value="Cadastrar" class="contact-submit" />
+
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+
+	<ui:insert name="importjs">
+		<ui:include src="/template/importjs.xhtml" />
+	</ui:insert>
+</body>
+</html>

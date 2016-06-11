@@ -1,52 +1,81 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head></h:head> 
-<body> 
+<h:head>
+
+
+</h:head>
+<body>
 	<ui:composition>
-	
-	<div id="loader">
-		<div class="sk-three-bounce">
-			<div class="sk-child sk-bounce1"></div>
-			<div class="sk-child sk-bounce2"></div>
-			<div class="sk-child sk-bounce3"></div>
+
+
+		<!--end loader -->
+
+		<!--begin header -->
+		<header class="header"> <!--begin nav --> <nav
+			class="navbar navbar-default navbar-fixed-top"> <!--begin container -->
+		<div class="container">
+			<!--begin navbar -->
+			<div class="navbar-header">
+				<button data-target="#navbar-collapse-02" data-toggle="collapse"
+					class="navbar-toggle" type="button">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+				<a href="index.html" class="navbar-brand brand scrool">Compare360</a>
+			</div>
+
+			<div id="navbar-collapse-02" class="collapse navbar-collapse">
+
+				<h:form>
+
+					<c:if test="#{not empty sessionScope['usuario-logado']}">
+						<ul class="nav navbar-nav navbar-right ">
+							<c:if test="#{sessionScope['usuario-logado'].geteAdmin()}">
+								<li><a href="#">Usuários</a></li>
+								<li><a href="/test/faces/restrito/tipoProduto.xhtml">Categorias</a></li>
+								<li><a href="/test/faces/restrito/atributo.xhtml">Atributos</a></li>
+								<li><a href="/test/faces/restrito/produto.xhtml">Produtos</a></li>
+								<li><a href="#">Sugestões</a></li>
+							</c:if>
+							<c:if test="#{not sessionScope['usuario-logado'].geteAdmin()}">
+								<li><a href="/test/faces/restrito/produto.xhtml">Produtos</a></li>
+								<li><a href="/test/faces/restrito/tipoProduto.xhtml">Categorias</a></li>
+								<li><a href="/test/faces/restrito/atributo.xhtml">Atributos</a></li>
+								<li><a href="#">Suas Sugestões</a></li>
+							</c:if>
+							<li><h:commandLink action="#{validador.logout()}"
+									class="purchase capitalized"> #{sessionScope['usuario-logado'].username}
+								<i class="fa fa-sign-out"></i>
+								</h:commandLink></li>
+
+						</ul>
+					</c:if>
+					<c:if test="#{empty sessionScope['usuario-logado']}">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#home_wrapper">Home</a></li>
+							<li><a href="#services">Números</a></li>
+							<li><a href="#conta" class="purchase scrool">Entrar</a></li>
+						</ul>
+					</c:if>
+
+
+
+				</h:form>
+			</div>
+			<!--end navbar -->
+
 		</div>
-	</div>
-	<!--end loader -->
+		<!--end container --> </nav> <!--end nav --> </header>
 
-	<!--begin header -->
-	<header class="header"> <!--begin nav --> 
-	<nav class="navbar navbar-default navbar-fixed-top"> <!--begin container -->
-	<div class="container">
-		<!--begin navbar -->
-		<div class="navbar-header">
-			<button data-target="#navbar-collapse-02" data-toggle="collapse"
-				class="navbar-toggle" type="button">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
 
-			<a href="index.html" class="navbar-brand brand scrool">Compare360</a>
-		</div>
 
-		<div id="navbar-collapse-02" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#home_wrapper">Home</a></li>
-				<li><a href="#services">Números</a></li>
-				<li><a href="#portfolio">Portfolio</a></li>
-
-				<li><a href="#conta" class="purchase scrool">Entrar</a></li>
-			</ul>
-		</div>
-		<!--end navbar -->
-
-	</div>
-	<!--end container --> </nav> <!--end nav --> </header>
-	
 	</ui:composition>
-</body> 
+</body>
 </html>

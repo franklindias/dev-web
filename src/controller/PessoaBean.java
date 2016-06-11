@@ -3,14 +3,13 @@ package controller;
 import dao.PessoaDAO;
 import model.Pessoa;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.*;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
-@ManagedBean(name="userBean")
+@ManagedBean
 @SessionScoped
-public class PessoaBean{
+public class PessoaBean {
 
 	private Pessoa pessoa;
 	private DataModel<Pessoa> listaPessoas;
@@ -21,20 +20,22 @@ public class PessoaBean{
 		pessoa = new Pessoa();
 	}
 
-	public void cadastrar(){
+	public void cadastrar() {
+		pessoa.seteAdmin(false);
 		new PessoaDAO().save(pessoa);
 		List<Pessoa> lista = new PessoaDAO().findAll();
 		listaPessoas = new ListDataModel<Pessoa>(lista);
 		pessoa = new Pessoa();
 	}
- 
-	public void alterar(){
-		new PessoaDAO().alter(pessoa);;
+
+	public void alterar() {
+		new PessoaDAO().alter(pessoa);
 		List<Pessoa> lista = new PessoaDAO().findAll();
 		listaPessoas = new ListDataModel<Pessoa>(lista);
 		pessoa = new Pessoa();
 	}
-	public void excluir(){
+
+	public void excluir() {
 		new PessoaDAO().delete(pessoa);
 		List<Pessoa> lista = new PessoaDAO().findAll();
 		listaPessoas = new ListDataModel<Pessoa>(lista);
@@ -58,6 +59,9 @@ public class PessoaBean{
 	public void setListaPessoas(DataModel<Pessoa> listaPessoas) {
 		this.listaPessoas = listaPessoas;
 	}
-	
- 
+
+	public void logar() {
+
+	}
+
 }

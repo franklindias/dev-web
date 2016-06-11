@@ -16,11 +16,11 @@
 
 </h:head>
 <body>
-	
-	<ui:insert name="importjs">
+
+	<ui:insert name="importheader">
 		<ui:include src="/template/header.xhtml" />
 	</ui:insert>
-	
+
 	<section id="home_wrapper" class="home-wrapper"> <!--begin gradient_overlay -->
 	<div class="gradient_overlay"></div>
 	<!--end gradient_overlay --> <!--begin container-->
@@ -45,13 +45,19 @@
 					<!--begin newsletter_form_box -->
 					<div class="newsletter_form_box">
 
+						<h:form id="newsletter-form" class="newsletter_form"
+							prependId="false">
+							<h:selectOneMenu id="email_newsletter"
+								value="#{tipoProdutoBean.listaTipoProdutos}">
+								<f:selectItems value="#{tipoProdutoBean.listaTipoProdutos}"
+									var="tp" itemLabel="#{tp.nome}" itemValue="#{tp.id}"
+									itemDisabled="#{not tp.status}"/>
+							</h:selectOneMenu>
+							<h:commandButton id="submit-button-newsletter" value="Filtrar" />
+						</h:form>
+
 						<!--begin newsletter-form -->
-						<form id="newsletter-form" class="newsletter_form"
-							action="newsletter.php" method="post">
-							<input id="email_newsletter" type="email" name="nf_email"
-								placeholder="Digite o tipo de produto que procura." /> <input
-								type="submit" value="PROCURAR!" id="submit-button-newsletter" />
-						</form>
+
 					</div>
 				</div>
 			</div>
@@ -126,8 +132,8 @@
 
 	</div>
 	<!--end section-white--> </section>
-	
-	<ui:insert name="importjs">
+
+	<ui:insert name="importconta">
 		<ui:include src="conta.xhtml" />
 	</ui:insert>
 

@@ -2,52 +2,88 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<title>Compare360 - Conta de Usuário</title>
 
-	<ui:insert name="importstyle">
-		<ui:include src="/template/importstyle.xhtml" />
-	</ui:insert>
 </h:head>
 <body>
 	<ui:component>
+		<c:if test="#{empty sessionScope['usuario-logado']}">
+			<section id="conta"> <!--begin section-white-->
+			<div class="section-dark medium-padding">
 
-		<section id="conta"> <!--begin section-white-->
-		<div class="section-dark medium-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-4">
+							<div class="col-md-12 text-center">
+								<h3 class="medium-title white">Crie sua conta</h3>
+							</div>
+							<div>
+								<h:form>
+									<h:message for="nome" errorStyle="color:red; display:block" />
+									<h:inputText id="nome" class="contact-input white-input"
+										a:placeholder="Nome Completo*"
+										value="#{pessoaBean.pessoa.nome}" />
+									<br />
 
-			<div class="container">
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-4">
-						<div class="col-md-12 text-center">
-							<h3 class="medium-title white">Crie sua conta</h3>
-						</div>
-						<div>
-							<h:form>
-								Seu nome <h:inputText value="#{userBean.pessoa.nome}"/><br/>
-								Email: <h:inputText value="#{userBean.pessoa.email}"/><br/>
-								Nome de Usuário: <h:inputText value="#{userBean.pessoa.username}"/><br/>
-								Senha: <h:inputText value="#{userBean.pessoa.password}"/><br/>
-								
-								<h:commandButton action="#{userBean.cadastrar()}" value="Cadastrar-se" />
-									
+									<h:message for="email" errorStyle="color:red; display:block" />
+									<h:inputText id="email" class="contact-input white-input"
+										a:placeholder="Email*" value="#{pessoaBean.pessoa.email}" />
+									<br />
+
+									<h:message for="username" errorStyle="color:red; display:block" />
+									<h:inputText id="username" class="contact-input white-input"
+										a:placeholder="Nome de Usuário*"
+										value="#{pessoaBean.pessoa.username}" />
+									<br />
+
+									<h:message for="password" errorStyle="color:red; display:block" />
+									<h:inputSecret id="password" class="contact-input white-input"
+										a:placeholder="Senha*" value="#{pessoaBean.pessoa.password}" />
+									<br />
+
+									<h:commandButton action="#{pessoaBean.cadastrar()}"
+										value="Criar conta" class="contact-submit" />
+
 								</h:form>
+							</div>
+						</div>
+						<div class="col-md-2"></div>
+						<div class="col-md-4">
+							<div class="col-md-12 text-center">
+								<div class="col-md-12 text-center">
+									<h3 class="medium-title white">Logue</h3>
+								</div>
+								<h:form class="text-right">
+
+
+									<h:inputText id="un" class="contact-input white-input"
+										a:placeholder="Nome de Usuário*" value="#{validador.username}" />
+									<br />
+
+									<h:inputSecret id="pw" class="contact-input white-input"
+										a:placeholder="Senha*" value="#{validador.password}" />
+									<br />
+									<h:messages errorStyle="color:red;" />
+
+									<h:commandButton action="#{validador.autenticar}" value="Logar"
+										class="contact-submit" />
+
+								</h:form>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-					<div class="col-md-12 text-center">
-							<h3 class="medium-title white">Logue</h3>
-						</div>
-					</div>
+
 				</div>
 
 			</div>
-
-		</div>
-		<!--end container--> </section>
-
+			<!--end container--> </section>
+		</c:if>
 	</ui:component>
 </body>
 </html>

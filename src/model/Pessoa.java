@@ -9,13 +9,15 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.sun.istack.internal.NotNull;
 
 @Entity
 @Table(name = "pessoa")
 public class Pessoa implements Serializable {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "cod_pessoa")
@@ -36,29 +38,34 @@ public class Pessoa implements Serializable {
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	@NotNull
+
+	@NotEmpty()
+	@Length(min = 10, message = "Seu nome não pode ter menos que 10 caracteres.")
 	private String nome;
-	@NotNull
-	@Email
+
+	@NotEmpty()
+	@Email(message = "Digite um Email válido.")
 	private String email;
-	@NotNull
+
+	@NotEmpty()
+	@Length(min = 5, message = "Seu nome de usuario não pode ter menos que 5")
 	private String username;
-	@NotNull
+
+	@NotEmpty()
+	@Length(min = 6, message = "Sua senha não pode ter menos que 6 caracteres.")
 	private String password;
-	
+
 	private Boolean eAdmin = false;
 	private Boolean eConfiavel = false;
-	
+
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<Produto> produtos;
-	
+
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<Comentario> comentarios;
-	
+
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<Classificacao> classificacoes;
-	
 
 	public Boolean geteConfiavel() {
 		return eConfiavel;
@@ -140,17 +147,19 @@ public class Pessoa implements Serializable {
 		this.classificacoes = classificacoes;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((classificacoes == null) ? 0 : classificacoes.hashCode());
+		result = prime * result + ((comentarios == null) ? 0 : comentarios.hashCode());
 		result = prime * result + ((eAdmin == null) ? 0 : eAdmin.hashCode());
 		result = prime * result + ((eConfiavel == null) ? 0 : eConfiavel.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((produtos == null) ? 0 : produtos.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -164,6 +173,16 @@ public class Pessoa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
+		if (classificacoes == null) {
+			if (other.classificacoes != null)
+				return false;
+		} else if (!classificacoes.equals(other.classificacoes))
+			return false;
+		if (comentarios == null) {
+			if (other.comentarios != null)
+				return false;
+		} else if (!comentarios.equals(other.comentarios))
+			return false;
 		if (eAdmin == null) {
 			if (other.eAdmin != null)
 				return false;
@@ -191,6 +210,11 @@ public class Pessoa implements Serializable {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (produtos == null) {
+			if (other.produtos != null)
+				return false;
+		} else if (!produtos.equals(other.produtos))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -198,7 +222,5 @@ public class Pessoa implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
