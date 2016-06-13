@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AtributoDAO;
 import dao.ProdutoDAO;
 import dao.TipoProdutoDAO;
 import dao.ValorAtributoDAO;
@@ -27,6 +28,7 @@ public class ProdutoBean {
 	private Produto produto = new Produto();
 	private DataModel<Produto> listaProdutos;
 	private DataModel<Atributo> listaAtributos;
+	private DataModel<Produto> listaProdutosPorTipo;
 
 	private ArrayList<ValorAtributo> valorAtributos = new ArrayList<ValorAtributo>();
 
@@ -36,6 +38,7 @@ public class ProdutoBean {
 	private ValorAtributo va;
 
 	public ProdutoBean() {
+		
 		List<Produto> lista = new ProdutoDAO().findAll();
 		listaProdutos = new ListDataModel<Produto>(lista);
 		setListaAtributos(new AtributoBean().getListaAtributosByTipoProduto(idTipoProduto));
@@ -43,7 +46,6 @@ public class ProdutoBean {
 		
 		produto = new Produto();
 		
-		loadValorAtributos();
 
 	}
 
@@ -123,6 +125,19 @@ public class ProdutoBean {
 		List<Produto> lista = new ProdutoDAO().findAll();
 		listaProdutos = new ListDataModel<Produto>(lista);
 		produto = new Produto();
+	}
+	
+
+	public DataModel<Produto> getListaProdutosByTipoProdutoId(int id) {
+		List<Produto> lista = new ProdutoDAO().buscarProdutoPorTipoProdutoId(id);
+		listaProdutosPorTipo = new ListDataModel<Produto>(lista);
+		return listaProdutosPorTipo;
+	}
+	
+	public Produto getProdutoById(int id) {
+		Produto p = new ProdutoDAO().findById(id);
+		
+		return p;
 	}
 
 	public Produto getProduto() {
