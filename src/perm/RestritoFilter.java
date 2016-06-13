@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import model.Pessoa;
 
 @WebFilter(urlPatterns = "/faces/restrito/*")
@@ -34,7 +35,6 @@ public class RestritoFilter implements Filter {
 			u = (Pessoa) sesison.getAttribute("usuario-logado");
 		}
 		
-		System.out.println("NOME--- " + u.getNome());
 
 		if (u == null) {
 			String contextPath = ((HttpServletRequest) req).getContextPath();

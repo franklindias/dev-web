@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Compare360 - Dashboard Admin</title>
+
+	<ui:insert name="importstyle">
+		<ui:include src="/template/importstyle.xhtml" />
+	</ui:insert>
+
+	<style>
+nav.navbar {
+	background-color: rgba(34, 34, 34, 0.95) !important;
+}
+
+.capitalized {
+	text-transform: capitalize !important;
+}
+
+#tipo_produto {
+	height: 400px;
+}
+</style>
+</h:head>
+<body>
+	<ui:insert name="importheader">
+		<ui:include src="/template/header.xhtml" />
+	</ui:insert>
+
+	<section id="tipo_produto">
+	<div class="section-white high-padding">
+
+		<div class="container">
+			<h5>Lista de Produtos</h5>
+
+			<div class="row">
+				<div class="col-md-7">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Seus Produtos</h3>
+						</div>
+						<div class="panel-body">
+							<h:dataTable class="table" id="produtos"
+								value="#{produtoBean.listaProdutos}" var="produto">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Nome do Produto" />
+									</f:facet>
+									<h:outputText value="#{produto.nome}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Status" />
+									</f:facet>
+									<h:outputText value="Aprovado" style="color:green;"
+										rendered="#{produto.status}" />
+									<h:outputText value="Aguardando" style="color:red;"
+										rendered="#{not produto.status}" />
+								</h:column>
+								<c:if test="#{sessionScope['usuario-logado'].geteAdmin()}">
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="" />
+										</f:facet>
+										<h:form>
+											<h:commandLink class='btn btn-danger'
+												action="#{produtoBean.excluir(produto)}" update="produtos">
+												<i class="fa fa-trash"></i>
+											</h:commandLink>
+											<h:commandLink class='btn btn-primary'
+												action="#{produtoBean.mudarStatus(produto)}"
+												update="produtos">
+												<i class="fa fa-exchange"></i>
+											</h:commandLink>
+										</h:form>
+									</h:column>
+								</c:if>
+							</h:dataTable>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Nova Produto</h3>
+						</div>
+						<div class="panel-body">
+							<h:form class="text-right">
+								<div class="row">
+									<div class="col-md-10">
+										<h:message for="produto" />
+										<h:selectOneMenu class="form-control" id="produto"
+											value="#{produtoBean.idTipoProduto}">
+											<f:selectItems
+												value="#{tipoProdutoBean.listaTipoProdutosAtivos}" var="tp"
+												itemLabel="#{tp.nome}" itemValue="#{tp.id}" />
+										</h:selectOneMenu>
+									</div>
+									<div class="col-md-2">
+										<h:commandLink class='btn btn-info'
+											action="#{produtoBean.refresh()}" update="produtos">
+											<i class="fa fa-chevron-right"></i>
+										</h:commandLink>
+									</div>
+								</div>
+							</h:form>
+							<h:form class="text-right" prependId="false">
+								<br />
+								<h:message for="np" />
+								<h:inputText id="np" style="color:black;"
+									class="contact-input white-input"
+									a:placeholder="Nome do Produto"
+									value="#{produtoBean.produto.nome}" />
+								<br />
+								<h:message for="pw" />
+								<h:inputText id="pw" style="color:black;"
+									class="contact-input white-input" a:placeholder="Página Web"
+									value="#{produtoBean.produto.pagina}" />
+								<br />
+
+								<p class="text-left">Atributos</p>
+
+								<ui:repeat var="attr" varStatus="atrstatus"
+									value="#{produtoBean.valorAtributos}">
+									<h:message for="atr" />
+									<h:inputText id="atr" style="color:black;"
+										class="contact-input white-input" name="#{atrstatus.index}"
+										a:placeholder="#{produtoBean.valorAtributos[atrstatus.index].atributo.nome}"
+										value="#{produtoBean.valorAtributos[atrstatus.index].valor}" />
+									<br />
+
+								</ui:repeat>
+
+								<h:commandButton action="#{produtoBean.cadastrar()}"
+									value="Cadastrar" class="contact-submit" />
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+
+	<ui:insert name="importjs">
+		<ui:include src="/template/importjs.xhtml" />
+	</ui:insert>
+</body>
+</html>

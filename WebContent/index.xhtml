@@ -5,15 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-
-
 	<title>Compare360</title>
 
 	<ui:insert name="importstyle">
 		<ui:include src="/template/importstyle.xhtml" />
 	</ui:insert>
-
-
 </h:head>
 <body>
 
@@ -49,7 +45,7 @@
 							prependId="false">
 							<h:selectOneMenu id="email_newsletter"
 								value="#{tipoProdutoBean.listaTipoProdutos}">
-								<f:selectItems value="#{tipoProdutoBean.listaTipoProdutos}"
+								<f:selectItems value="#{tipoProdutoBean.listaTipoProdutosAtivos}"
 									var="tp" itemLabel="#{tp.nome}" itemValue="#{tp.id}"
 									itemDisabled="#{not tp.status}"/>
 							</h:selectOneMenu>

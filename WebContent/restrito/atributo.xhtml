@@ -108,7 +108,7 @@ nav.navbar {
 								<h:message for="produto"/>
 								<h:selectOneMenu class="form-control"
 									id="produto" value="#{atributoBean.idProduto}">
-									<f:selectItems value="#{tipoProdutoBean.listaTipoProdutos}"
+									<f:selectItems value="#{tipoProdutoBean.listaTipoProdutosAtivos}"
 										var="tp" itemLabel="#{tp.nome}" itemValue="#{tp.id}" />
 								</h:selectOneMenu><br />
 								<h:message for="na"/>
@@ -123,6 +123,8 @@ nav.navbar {
 								<br />
 								<h:commandButton action="#{atributoBean.cadastrar()}"
 									value="Cadastrar" class="contact-submit" />
+									
+						
 
 							</h:form>
 						</div>

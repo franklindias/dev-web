@@ -5,8 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
+
+import com.sun.istack.internal.NotNull;
 
 @Entity
 @Table(name = "produto")
@@ -16,9 +20,14 @@ public class Produto implements Serializable {
 	@GeneratedValue
 	@Column(name = "cod_produto")
 	private int id;
+	@NotEmpty
+	@NotNull
+	@Length(min=5, max=30)
 	private String nome;
+	@URL
 	private String pagina;
 	private Boolean status;
+
 	private Date ultimaModificacao;
 	
 	@ManyToOne
@@ -29,9 +38,11 @@ public class Produto implements Serializable {
 	@JoinColumn(name = "cod_pessoa", nullable=false) 
 	private Pessoa pessoa;
 	
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	private List<ValorAtributo> valorAtributos;
 	
+	
+	//TALVEZ TIRAR
 	@OneToMany(mappedBy="produto", fetch = FetchType.LAZY)
 	private List<Comentario> comentarios;
 	

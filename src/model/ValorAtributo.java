@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.sun.istack.internal.NotNull;
+
 @Entity
 @Table(name = "valor_atributo")
 public class ValorAtributo implements Serializable {
@@ -23,18 +28,32 @@ public class ValorAtributo implements Serializable {
 	@Column(name = "cod_valor_atributo")
 	private int id;
 	
+	@NotNull
+	@NotEmpty
 	private String valor;
 	private Boolean status;
-	private Date ultimaModificacao;
 	
 	@ManyToOne
 	@JoinColumn(name = "cod_atributo") 
 	private Atributo atributo;
 	
+	public ValorAtributo(){
+		
+	}
+	
+	public ValorAtributo(String valor, Boolean status, Atributo atributo, Produto produto) {
+		super();
+		this.valor = valor;
+		this.status = status;
+		this.atributo = atributo;
+		this.produto = produto;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "cod_produto") 
 	private Produto produto;
 	
+	//TALVEZ TIRAR
 	@OneToMany(mappedBy="valorAtributo", fetch = FetchType.LAZY)
 	private List<Denuncia> denuncias;
 
@@ -62,13 +81,6 @@ public class ValorAtributo implements Serializable {
 		this.status = status;
 	}
 
-	public Date getUltimaModificacao() {
-		return ultimaModificacao;
-	}
-
-	public void setUltimaModificacao(Date ultimaModificacao) {
-		this.ultimaModificacao = ultimaModificacao;
-	}
 
 	public Atributo getAtributo() {
 		return atributo;
@@ -103,7 +115,6 @@ public class ValorAtributo implements Serializable {
 		result = prime * result + id;
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((ultimaModificacao == null) ? 0 : ultimaModificacao.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
@@ -139,11 +150,6 @@ public class ValorAtributo implements Serializable {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
-		if (ultimaModificacao == null) {
-			if (other.ultimaModificacao != null)
-				return false;
-		} else if (!ultimaModificacao.equals(other.ultimaModificacao))
-			return false;
 		if (valor == null) {
 			if (other.valor != null)
 				return false;
@@ -151,6 +157,7 @@ public class ValorAtributo implements Serializable {
 			return false;
 		return true;
 	}
+
 	
 	
 }

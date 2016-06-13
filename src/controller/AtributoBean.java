@@ -20,6 +20,15 @@ public class AtributoBean {
 	private DataModel<Atributo> listaAtributos;
 	private Pessoa u;
 	private int idProduto;
+	private int idTipoProduto = 3;
+
+	public int getIdTipoProduto() {
+		return idTipoProduto;
+	}
+
+	public void setIdTipoProduto(int idTipoProduto) {
+		this.idTipoProduto = idTipoProduto;
+	}
 
 	public int getIdProduto() {
 		return idProduto;
@@ -36,14 +45,14 @@ public class AtributoBean {
 	}
 
 	public void cadastrar() {
-		
+
 		HttpSession sesison = new SessionUtil().getSession();
 
 		u = (Pessoa) sesison.getAttribute("usuario-logado");
-		
+
 		atributo.setTipoProduto(TipoProdutoDAO.buscarPorId(idProduto));
 		atributo.setStatus(u.geteAdmin());
-		
+
 		new AtributoDAO().save(atributo);
 		List<Atributo> lista = new AtributoDAO().findAll();
 		listaAtributos = new ListDataModel<Atributo>(lista);
@@ -82,6 +91,17 @@ public class AtributoBean {
 
 	public DataModel<Atributo> getListaAtributos() {
 		List<Atributo> lista = new AtributoDAO().findAll();
+		listaAtributos = new ListDataModel<Atributo>(lista);
+		return listaAtributos;
+	}
+	
+	public String refresh(){
+		
+		return null;
+	}
+	
+	public DataModel<Atributo> getListaAtributosByTipoProduto(int id) {
+		List<Atributo> lista = new AtributoDAO().buscarAtributoPorTipoProduto(id);
 		listaAtributos = new ListDataModel<Atributo>(lista);
 		return listaAtributos;
 	}

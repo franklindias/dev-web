@@ -75,6 +75,12 @@ public class TipoProdutoBean {
 		listaTipoProdutos = new ListDataModel<TipoProduto>(lista);
 		return listaTipoProdutos;
 	}
+	
+	public DataModel<TipoProduto> getListaTipoProdutosAtivos() {
+		List<TipoProduto> lista = new TipoProdutoDAO().buscarAtivos();
+		listaTipoProdutos = new ListDataModel<TipoProduto>(lista);
+		return listaTipoProdutos;
+	}
 
 	public void setListaTipoProdutos(DataModel<TipoProduto> listaTipoProdutos) {
 		this.listaTipoProdutos = listaTipoProdutos;
